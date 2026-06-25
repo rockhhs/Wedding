@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <title>OUR WEDDING — 誠摯邀請</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+TC:wght@300;500;700&display=swap" rel="stylesheet">
@@ -67,83 +71,4 @@
 
                     <div class="space-y-2">
                         <div class="flex justify-between items-baseline">
-                            <label class="block text-sm font-medium text-stone-600 tracking-wider">飲食習慣 <span class="text-emerald-700">*</span></label>
-                            <span class="text-[11px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md">純植物蔬食宴</span>
-                        </div>
-                        <select name="diet" class="w-full bg-stone-50/50 border border-stone-200 rounded-xl px-4 py-3 text-stone-700 focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 transition duration-300">
-                            <option value="純素 (無五辛)">純素 (無五辛)</option>
-                            <option value="植物五辛素" selected>植物五辛素</option>
-                            <option value="蛋奶素亦可">健康隨緣（皆可）</option>
-                        </select>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="block text-sm font-medium text-stone-600 tracking-wider">想對新人說的話</label>
-                        <textarea name="blessing" rows="3" placeholder="留下您的溫馨祝福與話語..." 
-                            class="w-full bg-stone-50/50 border border-stone-200 rounded-xl px-4 py-3 text-stone-800 placeholder-stone-300 focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 transition duration-300 resize-none"></textarea>
-                    </div>
-
-                    <button type="submit" id="submitBtn" class="w-full bg-stone-800 hover:bg-emerald-800 text-stone-100 font-medium tracking-widest py-4 px-6 rounded-xl transition duration-300 shadow-md hover:shadow-xl transform active:scale-[0.99] block text-center">
-                        確認送出回覆
-                    </button>
-                </form>
-            </div>
-            
-            <div class="bg-stone-50 p-6 text-center border-t border-stone-100 text-stone-400 text-xs space-y-1">
-                <p class="tracking-wide">時間：2026.11.15 12:00 入席</p>
-                <p class="tracking-wide">地點：十五純植物餐廳 (新竹市東區)</p>
-            </div>
-        </div>
-    </main>
-
-    <footer class="py-6 text-center text-[10px] eng-font text-stone-400 tracking-[0.2em] uppercase">
-        © 2026 OUR WEDDING. ALL RIGHTS RESERVED.
-    </footer>
-
-    <script>
-        document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            // 防止重複點擊，並顯示讀取中狀態
-            submitBtn.disabled = true;
-            submitBtn.innerText = "傳送中... PLEASE WAIT";
-            submitBtn.classList.add('opacity-70');
-            
-            // 🚀 保持與您本地 Docker 後端的 Port 8000 連動
-            const API_URL = "https://agencies-clause-act-tough.trycloudflare.com/submit_rsvp"; 
-            const formData = new FormData(this);
-            
-            // 🛠️ 修正點：將 FormData 轉換成標準的 JSON 物件
-            const data = Object.fromEntries(formData.entries());
-            
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json' // 告訴後端我們要傳送 JSON
-                    },
-                    body: JSON.stringify(data) // 轉換為 JSON 字串
-                });
-                
-                const result = await response.json();
-                
-                if (response.ok && result.status === 'success') {
-                    alert('✨ 謝謝您的回覆！我們十一月見。');
-                    this.reset();
-                } else {
-                    alert('❌ 系統似乎有些小狀況，請稍後再試。');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('❌ 目前無法連線至本地伺服器，請確認 Docker 容器與 Cloudflare 視窗是否正常運行。');
-            } finally {
-                // 恢復按鈕狀態
-                submitBtn.disabled = false;
-                submitBtn.innerText = "確認送出回覆";
-                submitBtn.classList.remove('opacity-70');
-            }
-        });
-    </script>
-</body>
-</html>
+                            <label class="block text-sm font-medium text-stone-600 tracking-wider">飲食習慣 <span

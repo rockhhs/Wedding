@@ -105,49 +105,44 @@
     </footer>
 
     <script>
-        document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "傳送中... PLEASE WAIT";
+        submitBtn.classList.add('opacity-70');
+        
+        // 🚀 確保這裡的網址與你目前 PowerShell 視窗內顯示的一致
+        const API_URL = "https://agencies-clause-act-tough.trycloudflare.com/submit_rsvp"; 
+        
+        // 🛠️ 改回標準表單格式發送
+        const formData = new FormData(this);
+        
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                // 🛑 注意：傳送 FormData 時，絕對不能寫 headers: {'Content-Type': ...}，瀏覽器會自動處理
+                body: formData 
+            });
             
-            const submitBtn = document.getElementById('submitBtn');
-            // 防止重複點擊，並顯示傳送狀態
-            submitBtn.disabled = true;
-            submitBtn.innerText = "傳送中... PLEASE WAIT";
-            submitBtn.classList.add('opacity-70');
+            const result = await response.json();
             
-            // 🚀 與您當前運行的 PowerShell Cloudflare 隧道端點保持連動
-            const API_URL = "https://agencies-clause-act-tough.trycloudflare.com/submit_rsvp"; 
-            
-            const formData = new FormData(this);
-            // 🛠️ 將前端 FormData 完美封裝轉換成標準 JSON 格式物件
-            const data = Object.fromEntries(formData.entries());
-            
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-                
-                const result = await response.json();
-                
-                if (response.ok && result.status === 'success') {
-                    alert('✨ 謝謝您的回覆！我們十一月見。');
-                    this.reset();
-                } else {
-                    alert('❌ 系統似乎有些小狀況，請稍後再試。');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('❌ 目前無法連線至本地伺服器，請確認 Docker 容器與 Cloudflare 視窗是否正常運行。');
-            } finally {
-                // 恢復按鈕可點擊狀態
-                submitBtn.disabled = false;
-                submitBtn.innerText = "確認送出回覆";
-                submitBtn.classList.remove('opacity-70');
+            if (response.ok && result.status === 'success') {
+                alert('✨ 謝謝您的回覆！我們十一月見。');
+                this.reset();
+            } else {
+                alert('❌ 系統似乎有些小狀況，請稍後再試。');
             }
-        });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ 目前無法連線至本地伺服器，請確認 Docker 容器與 Cloudflare 視窗是否正常運行。');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "確認送出回覆";
+            submitBtn.classList.remove('opacity-70');
+        }
+    });
     </script>
 </body>
 </html>
